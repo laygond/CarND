@@ -55,24 +55,72 @@ class DBWNode(object):
 
         # TODO: Create `Controller` object
         # self.controller = Controller(<Arguments you wish to provide>)
-
+        self.controller = Controller(vehicle_mass=vehicle_mass,
+                                    fuel_capacity=fuel_capacity,
+                                    brake_deadband=brake_deadband,
+                                    decel_limit=decel_limit,
+                                    accel_limit=accel_limit,
+                                    wheel_radius=wheel_radius,
+                                    wheel_base=wheel_base,
+                                    steer_ratio=steer_ratio,
+                                    max_lat_accel=max_lat_accel,
+                                    max_steer_angle=max_steer_angle)
         # TODO: Subscribe to all the topics you need to
+        rospy.Subscriber('/vehicle/dbw_enabled', Bool, self.dbw_enabled_cb)
+        rospy.Subscriber('/twist_cmd', TwistStamped, self.twist_cb)
+        rospy.Subscriber('/current_velocity', TwistStamped, self.velocity_cb)
+                
+        self.current_vel  = None
+        self.curr_ang_vel = None
+        self.dbw_enabled  = None
+        self.linear_vel   = None
+        self.angular_vel  = None
+        self.throttle = self.steering = self.brake = 0
 
         self.loop()
 
     def loop(self):
+        """
+        This Node's Main Loop: It runs forever at 50Hz until ROS is shutdown.
+        Publishes updated throttle, brake, and steering if car is in autonomous mode. 
+        """
         rate = rospy.Rate(50) # 50Hz
         while not rospy.is_shutdown():
-            # TODO: Get predicted throttle, brake, and steering using `twist_controller`
-            # You should only publish the control commands if dbw is enabled
-            # throttle, brake, steering = self.controller.control(<proposed linear velocity>,
-            #                                                     <proposed angular velocity>,
-            #                                                     <current linear velocity>,
-            #                                                     <dbw status>,
-            #                                                     <any other argument you need>)
-            # if <dbw is enabled>:
-            #   self.publish(throttle, brake, steer)
-            rate.sleep()
+            # TODO: Implement
+            # Corrects/Updates throttle, brake, and steering using predictions from twist controller.
+            if not None in (self.current_vel, self.linear_vel, self.angular_vel):
+                self.throttle, self.brake, self.steering = self.controller.control(self.current_vel,
+                                                                                self.dbw_enabled,
+                                                                                self.linear_vel,
+                                                                                self.angular_vel) 
+            # Publish if car is in autonomous mode.
+            if self.dbw_enabled:
+                self.publish(self.throttle, self.brake, self.steering)
+            rate.sleep() 
+    
+    def dbw_enabled_cb(self, msg):
+        """
+        Callback function from subscribing to '/vehicle/dbw_enabled' topic.
+        It stores the car's DBW status to know whether a car is in autonomous(True)
+        or manual mode(False). 
+        """
+        self.dbw_enabled = msg
+
+    def twist_cb(self, msg):
+        """
+        Callback function from subscribing to '/twist_cmd' topic.
+        It stores the car's Target linear and angular velocities
+        """
+        self.linear_vel  = msg.twist.linear.x
+        self.angular_vel = msg.twist.angular.z
+
+    def velocity_cb(self, msg):
+        """
+        Callback function from subscribing to '/current_velocity' topic.
+        It stores the car's current velocity seen from the cars reference,
+        i.e., just forward velocity.
+        """
+        self.current_vel = msg.twist.linear.x 
 
     def publish(self, throttle, brake, steer):
         tcmd = ThrottleCmd()
