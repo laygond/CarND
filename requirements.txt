@@ -41,7 +41,7 @@ html5lib==0.9999999
 image-geometry==1.12.8
 interactive-markers==1.11.4
 itsdangerous==0.24
-Jinja2==2.10
+Jinja2==2.11.3
 joint-state-publisher==1.12.14
 joint-state-publisher-gui==1.12.14
 joint-trajectory-action-tools==0.0.10
