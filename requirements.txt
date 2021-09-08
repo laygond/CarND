@@ -57,7 +57,7 @@ moveit-ros-visualization==0.9.18
 numpy==1.13.1
 openni2-launch==0.4.2
 pbr==4.0.3
-Pillow==2.2.1
+Pillow==8.3.2
 pluginlib==1.11.3
 pr2-controller-manager==1.8.17
 protobuf==3.5.2.post1
