@@ -159,7 +159,7 @@ tf2-kdl==0.5.20
 tf2-py==0.5.20
 tf2-ros==0.5.20
 topic-tools==1.12.14
-ujson==1.35
+ujson==5.2.0
 unique-id==1.0.5
 urdfdom-py==0.3.3
 Werkzeug==0.14.1
