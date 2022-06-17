@@ -54,7 +54,7 @@ mock==2.0.0
 moveit-commander==0.9.18
 moveit-ros-planning-interface==0.9.18
 moveit-ros-visualization==0.9.18
-numpy==1.13.1
+numpy==1.21.0
 openni2-launch==0.4.2
 pbr==4.0.3
 Pillow==2.2.1
