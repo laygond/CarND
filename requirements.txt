@@ -37,7 +37,7 @@ gevent==1.4.0
 gevent-websocket==0.10.1
 greenlet==0.4.15
 h5py==2.6.0
-html5lib==0.9999999
+html5lib==0.999999999
 image-geometry==1.12.8
 interactive-markers==1.11.4
 itsdangerous==0.24
