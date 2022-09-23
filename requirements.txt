@@ -60,7 +60,7 @@ pbr==4.0.3
 Pillow==2.2.1
 pluginlib==1.11.3
 pr2-controller-manager==1.8.17
-protobuf==3.5.2.post1
+protobuf==3.18.3
 pyparsing==2.2.0
 python-dateutil==2.7.3
 python-engineio==3.11.2
