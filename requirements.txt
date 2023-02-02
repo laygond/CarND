@@ -162,6 +162,6 @@ topic-tools==1.12.14
 ujson==1.35
 unique-id==1.0.5
 urdfdom-py==0.3.3
-Werkzeug==0.14.1
+Werkzeug==0.15.5
 wsaccel==0.6.2
 xacro==1.11.3
